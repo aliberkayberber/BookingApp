@@ -1,4 +1,6 @@
 using BookingApp.Data.Context;
+using BookingApp.Data.Repositories;
+using BookingApp.Data.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BookingAppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-}); 
+});
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // generic olduðu için typeof kullandýk
+
+builder.Services.AddScoped<IUnitOfWork , UnitOfWork>();
 
 var app = builder.Build();
 
