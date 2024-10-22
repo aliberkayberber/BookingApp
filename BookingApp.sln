@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingApp.Data", "BookingApp.Data\BookingApp.Data.csproj", "{E081292B-2E08-434B-BB96-C3AC09DA97DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingApp.Data", "BookingApp.Data\BookingApp.Data.csproj", "{E081292B-2E08-434B-BB96-C3AC09DA97DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingApp.Business", "BookingApp.Business\BookingApp.Business.csproj", "{4499DA5D-24A3-48C4-B886-0FDE9AAE3E3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingApp.Business", "BookingApp.Business\BookingApp.Business.csproj", "{4499DA5D-24A3-48C4-B886-0FDE9AAE3E3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingApp.WebApi", "BookingApp.WebApi\BookingApp.WebApi.csproj", "{FAB4A5DC-53E1-4DF3-956B-923807664DB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingApp.WebApi", "BookingApp.WebApi\BookingApp.WebApi.csproj", "{FAB4A5DC-53E1-4DF3-956B-923807664DB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
