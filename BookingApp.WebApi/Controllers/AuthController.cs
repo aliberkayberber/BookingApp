@@ -1,6 +1,8 @@
 ﻿using BookingApp.Business.Operations.User;
 using BookingApp.Business.Operations.User.Dtos;
+using BookingApp.WebApi.Jwt;
 using BookingApp.WebApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +19,7 @@ namespace BookingApp.WebApi.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
             if(!ModelState.IsValid)
@@ -42,5 +44,58 @@ namespace BookingApp.WebApi.Controllers
             else return BadRequest(result.Message);
 
         }
+
+        [HttpPost("login")]
+        public IActionResult Login(LoginRequest request)
+        {
+            if (!ModelState.IsValid) 
+                return BadRequest(ModelState);
+
+            var loginDto = new LoginUserDto
+            {
+                EMail = request.Email,
+                Password = request.Password
+            };
+
+            var result = _userService.LoginUser(loginDto);
+
+            if (!result.IsSucceed)
+            {
+                return BadRequest(result.Message);
+            }
+            
+            // jwt 
+
+            var user = result.Data;
+
+            var configuration = HttpContext.RequestServices.GetRequiredService<IConfiguration>();
+
+            var token = JwtHelper.GenerateJwtToken(new JwtDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName= user.FirstName,
+                LastName= user.LastName,
+                UserType = user.UserType,
+                SecretKey = configuration["Jwt:SecretKey"]!,
+                Issuer = configuration["Jwt:Issuer"]!,
+                Audience = configuration["Jwt:Audience"]!,
+                ExpireMinutes = int.Parse(configuration["Jwt:ExpireMinutes"]!)
+            });
+
+            return Ok(new LoginResponse
+            {
+                Message ="Giriş Başarılı ile tamalandı",
+                Token = token,
+            });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult>  GetMyUser()
+        {
+            return Ok();
+        }
+
     }
 }
