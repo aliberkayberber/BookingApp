@@ -1,10 +1,12 @@
 using BookingApp.Business.DataProtection;
 using BookingApp.Business.Operations.Feature;
 using BookingApp.Business.Operations.Hotel;
+using BookingApp.Business.Operations.Setting;
 using BookingApp.Business.Operations.User;
 using BookingApp.Data.Context;
 using BookingApp.Data.Repositories;
 using BookingApp.Data.UnitOfWork;
+using BookingApp.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +68,8 @@ builder.Services.AddScoped<IFeatureService , FeatureManager>();
 
 builder.Services.AddScoped<IHotelService , HotelManager>();
 
+builder.Services.AddScoped<ISettingService , SettingManager>(); 
+
 var keysDirectory = new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "App_Data", "Keys"));
 
 builder.Services.AddDataProtection()
@@ -97,6 +101,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMaintenanceMode();
 
 app.UseAuthentication();
 app.UseAuthorization();

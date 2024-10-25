@@ -1,5 +1,6 @@
 ﻿using BookingApp.Business.Operations.Hotel;
 using BookingApp.Business.Operations.Hotel.Dtos;
+using BookingApp.WebApi.Filters;
 using BookingApp.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -89,6 +90,7 @@ namespace BookingApp.WebApi.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles ="Admin")]
+        [TimeControlFilter]
         public async Task<IActionResult> UpdateHotel(int id, UpdateHotelRequest request)
         {
             var updateHotelDto = new UpdateHotelDto
